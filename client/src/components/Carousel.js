@@ -16,6 +16,7 @@ export const Carousel = () => {
   return (
     <div className="image-container">
       <h1 className="title">{title}</h1>
+
       {loading ? (
         <div style={{ paddingTop: "5vh" }}>
           <Spinner
@@ -25,8 +26,16 @@ export const Carousel = () => {
           />
         </div>
       ) : (
-        images.length !== 0 && (
-          <img src={images[index]} alt={active} style={{ height: "40vh" }} />
+        images.length > 0 && (
+          <>
+            <h1 className="mt-5" style={{ float: "left" }}>
+              ⏪
+            </h1>
+            <img src={images[index]} style={{ height: "40vh" }} />
+            <h1 className="mt-5" style={{ float: "right" }}>
+              ⏩
+            </h1>
+          </>
         )
       )}
     </div>
