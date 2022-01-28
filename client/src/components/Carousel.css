@@ -1,0 +1,8 @@
+.image-container {
+  min-height: 55vh;
+}
+
+.spinner {
+  height: 20rem;
+  width: 20rem;
+}
