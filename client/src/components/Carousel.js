@@ -4,7 +4,7 @@ import { Spinner } from "react-bootstrap";
 import "./Carousel.css";
 
 export const Carousel = () => {
-  const { images, index, getActive, loading } = useImage();
+  const { images, index, getActive, loading, setIndex } = useImage();
   const active = getActive();
   var title;
   if (active === "all") title = "Cats 🐱 & Sharks 🦈";
@@ -26,17 +26,27 @@ export const Carousel = () => {
           />
         </div>
       ) : (
-        images.length > 0 && (
-          <>
-            <h1 className="mt-5" style={{ float: "left" }}>
+        <>
+          {index >= 0 && (
+            <h1
+              className="mt-5"
+              style={{ float: "left", cursor: "pointer" }}
+              onClick={() => setIndex(index - 1)}
+            >
               ⏪
             </h1>
-            <img src={images[index]} style={{ height: "40vh" }} />
-            <h1 className="mt-5" style={{ float: "right" }}>
+          )}
+          <img src={images[index]} style={{ height: "40vh" }} />
+          {index <= images.length - 1 && (
+            <h1
+              className="mt-5"
+              style={{ float: "right", cursor: "pointer" }}
+              onClick={() => setIndex(index + 1)}
+            >
               ⏩
             </h1>
-          </>
-        )
+          )}
+        </>
       )}
     </div>
   );

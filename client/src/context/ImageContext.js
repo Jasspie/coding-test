@@ -67,6 +67,7 @@ export const ImageProvider = ({ children }) => {
     loading,
     updateImages,
     getActive,
+    setIndex,
   };
 
   return (
