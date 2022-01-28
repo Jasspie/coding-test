@@ -13,6 +13,7 @@ export const ImageProvider = ({ children }) => {
   const [active, setActive] = useState({ cat: false, shark: false });
   const [loading, setLoading] = useState(false);
 
+  // useEffect to call the api whenever a button is clicked, which changes the value of active
   useEffect(() => {
     const getImages = async () => {
       setLoading(true);
@@ -22,9 +23,9 @@ export const ImageProvider = ({ children }) => {
           process.env.REACT_APP_BASE_URL ||
           `http://localhost:5000/api/images/${endpoint}`;
         const { data } = await axios.get(url);
+        // slight delay is added so that spinner can be seen for longer
         await new Promise((resolve) => setTimeout(resolve, 150));
-        if (images.length === 10) setIndex(index * 2);
-        else setIndex(index / 2);
+        setIndex(0);
         setImages(data);
       } else {
         setIndex(0);
@@ -35,6 +36,7 @@ export const ImageProvider = ({ children }) => {
     getImages();
   }, [active]);
 
+  // function to reverse the boolean whenever the button is clicked
   const updateImages = (type) => {
     switch (type) {
       case "Cats":
@@ -52,6 +54,7 @@ export const ImageProvider = ({ children }) => {
     }
   };
 
+  // helper function to return the current active status
   const getActive = () => {
     const cat = active["cat"];
     const shark = active["shark"];
