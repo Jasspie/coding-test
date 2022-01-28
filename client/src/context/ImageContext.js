@@ -9,45 +9,64 @@ export const useImage = () => {
 
 export const ImageProvider = ({ children }) => {
   const [images, setImages] = useState([]);
-  const [active, setActive] = useState({ cat: true, shark: true });
+  const [index, setIndex] = useState(0);
+  const [active, setActive] = useState({ cat: false, shark: false });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getImages = async () => {
-      const api = axios.create({
-        baseURL:
-          process.env.REACT_APP_BASE_URL || "http://localhost:5000/api/images",
-      });
-
-      var endpoint;
-      if (active["cat"] && active["shark"]) endpoint = "/all";
-      else if (active["cat"] && !active["shark"]) endpoint = "/cat";
-      else if (!active["cat"] && active["shark"]) endpoint = "/shark";
-      else endpoint = null;
-
-      const { data } = await api.get(endpoint);
-      setImages(data);
+      setLoading(true);
+      var endpoint = getActive();
+      if (endpoint) {
+        const url =
+          process.env.REACT_APP_BASE_URL ||
+          `http://localhost:5000/api/images/${endpoint}`;
+        const { data } = await axios.get(url);
+        await new Promise((resolve) => setTimeout(resolve, 150));
+        if (images.length === 10) setIndex(index * 2);
+        else setIndex(index / 2);
+        setImages(data);
+      } else {
+        setIndex(0);
+        setImages([]);
+      }
+      setLoading(false);
     };
-    setLoading(true);
     getImages();
-    setLoading(false);
   }, [active]);
 
   const updateImages = (type) => {
     switch (type) {
-      case "cat":
-        return setActive((a) => !a["cat"]);
-      case "shark":
-        return setActive((a) => !a["shark"]);
+      case "Cats":
+        return setActive((prev) => ({
+          ...prev,
+          cat: !active["cat"],
+        }));
+      case "Sharks":
+        return setActive((prev) => ({
+          ...prev,
+          shark: !active["shark"],
+        }));
       default:
         return null;
     }
   };
 
+  const getActive = () => {
+    const cat = active["cat"];
+    const shark = active["shark"];
+    if (cat && shark) return "all";
+    else if (cat && !shark) return "cat";
+    else if (!cat && shark) return "shark";
+    else return null;
+  };
+
   const value = {
     images,
+    index,
     loading,
     updateImages,
+    getActive,
   };
 
   return (

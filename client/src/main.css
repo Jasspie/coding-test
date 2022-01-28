@@ -1,0 +1,12 @@
+.container {
+  text-align: center;
+  margin: auto;
+  width: 80%;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.title {
+  font-size: 3.5rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
