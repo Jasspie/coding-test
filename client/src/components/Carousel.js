@@ -27,7 +27,7 @@ export const Carousel = () => {
         </div>
       ) : (
         <>
-          {index >= 0 && (
+          {index > 0 && (
             <h1
               className="mt-5"
               style={{ float: "left", cursor: "pointer" }}
@@ -37,7 +37,7 @@ export const Carousel = () => {
             </h1>
           )}
           <img src={images[index]} style={{ height: "40vh" }} />
-          {index <= images.length - 1 && (
+          {index < images.length - 1 && (
             <h1
               className="mt-5"
               style={{ float: "right", cursor: "pointer" }}
