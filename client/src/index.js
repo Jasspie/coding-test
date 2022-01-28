@@ -1,6 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { App } from "./App";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+// bootstrap is used for the loading spinner
 
 ReactDOM.render(
   <React.StrictMode>
